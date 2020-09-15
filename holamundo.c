@@ -12,7 +12,6 @@ int main()
     const char *path="./Juegos"; 
     FILE *file;
     dir = opendir(path);
-<<<<<<< HEAD
     if(dir==NULL){
         printf("No se abrio el directorio");
         exit(2);
@@ -23,12 +22,3 @@ int main()
     closedir(dir);
     return 0;
 }
-=======
-    while(dp=readdir(dir)){
-        dp->d_name;
-        print("%d",i);
-        i++;
-    }
-    return 0;
-}
->>>>>>> 52180394b6f370bd96d1643bb213b03028110b2a
