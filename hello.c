@@ -4,14 +4,16 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
-int main()
-{   
+
+void ordenar(){
     int i=0;
     DIR *dir;
     struct dirent *dp;
     const char *path="./Juegos"; 
     char direc[300];
-    char word[300];
+    char titulo[300];
+    char genero[300];
+    char *aux;
     FILE *fp;
     dir = opendir(path);
     if(dir==NULL){
@@ -30,13 +32,24 @@ int main()
             printf("%s\n", direc);
 
             fp = fopen(direc, "r");
-            while(!feof(fp)){
-                fgets(word, sizeof(char)*300, fp);
-                printf("%s\n", word);
-            }
+            fgets(titulo, sizeof(char)*300, fp);
+            fgets(genero, sizeof(char)*300, fp);
+            printf("Genero: %s", genero);
 
+            aux = strtok(genero, ",");
+            while(aux != NULL){
+                printf("Genero: %s\n", aux);
+                aux = strtok(NULL, ",");
+            }
+            
         }
     }
     closedir(dir);
+}
+
+int main(){
+    printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n");
+    
+
     return 0;
 }
