@@ -11,7 +11,8 @@ int main()
     struct dirent *dp;
     const char *path="./Juegos"; 
     char direc[300];
-    FILE *file;
+    char word[300];
+    FILE *fp;
     dir = opendir(path);
     if(dir==NULL){
         printf("No se abrio el directorio");
@@ -24,6 +25,15 @@ int main()
             i++;
             printf("File %d: %s\n", i, dp->d_name);         
 
+            strcpy(direc, "Juegos/");
+			strcat(direc, dp->d_name);	
+            printf("%s\n", direc);
+
+            fp = fopen(direc, "r");
+            while(!feof(fp)){
+                fgets(word, sizeof(char)*300, fp);
+                printf("%s\n", word);
+            }
 
         }
     }
