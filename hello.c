@@ -37,10 +37,12 @@ void ordenar(){
             printf("Genero: %s", genero);
 
             aux = strtok(genero, ",");
+            
+            /*
             while(aux != NULL){
                 printf("Genero: %s\n", aux);
                 aux = strtok(NULL, ",");
-            }
+            }*/
             
         }
     }
@@ -48,8 +50,24 @@ void ordenar(){
 }
 
 int main(){
-    printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n");
-    
-
+    ordenar();
+    /*
+    char accion[100];
+    printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n Presione 3 para salir.\n");
+    fgets(accion,100,stdin);
+    while(strcmp(accion,"3")!=0){
+        strtok(accion, "\n");
+        if(strcmp(accion,"1")==0){
+            ordenar();
+            printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n Presione 3 para salir.\n");
+            fgets(accion,100,stdin);
+            strtok(accion, "\n");
+        }
+        else{
+            printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n Presione 3 para salir.\n");
+            fgets(accion,100,stdin);
+            strtok(accion, "\n");
+        }
+    }*/
     return 0;
 }
