@@ -11,15 +11,14 @@ void ordenar(){
     DIR *dir2;
     struct dirent *dp;
     const char *path="./Juegos"; 
+    const char *path1="./"; 
     char direc[300];
     char titulo[300];
     char genero[300];
-    char compania[300];
-    char resumen[300];
+    char path2[300];
     char *aux;
     char aux2[300];
     FILE *fp;
-    FILE *fp2;
     dir = opendir(path);
     if(dir==NULL){
         printf("No se abrio el directorio");
@@ -31,16 +30,12 @@ void ordenar(){
         else{
             i++;
             printf("File %d: %s\n", i, dp->d_name);         
-
             strcpy(direc, "Juegos/");
 			strcat(direc, dp->d_name);	
             printf("%s\n", direc);
-
             fp = fopen(direc, "r");
             fgets(titulo, sizeof(char)*300, fp);
             fgets(genero, sizeof(char)*300, fp);
-            fgets(compania, sizeof(char)*300, fp);
-            fgets(resumen, sizeof(char)*300, fp);
             printf("Genero: %s", genero);
             aux = strtok(genero, ",");
             printf("%s\n",aux);
@@ -55,10 +50,13 @@ void ordenar(){
             else{
                 printf("si existe esa carpeta\n");
             }
-            fp2=fopen(dp->d_name, "a"); 
-            fclose (fp2 );
-            fclose(fp);
-
+            strcat(path2,path1);
+            strcat(path2,aux);
+            strcat(path2,"/");
+            strcat(path2,dp->d_name);
+            printf("%s",path2);
+            rename(direc,path2);
+            strcpy(path2,"");
         }
     }   
     closedir(dir);
@@ -66,8 +64,7 @@ void ordenar(){
 
 int main(){
     printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n");
-    ordenar();
-    
 
+    ordenar();
     return 0;
 }
