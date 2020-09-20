@@ -1,0 +1,4 @@
+Pokemon
+Rpg,Multijugador
+Game Freak
+Captura animales y hazlos pelear
