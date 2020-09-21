@@ -11,7 +11,7 @@ void ordenar(){
     DIR *dir2;
     struct dirent *dp;
     const char *path="./Juegos"; 
-    char path1[300];
+    char path1[300]="";
     char direc[300];
     char titulo[300];
     char genero[300];
@@ -67,7 +67,6 @@ void ordenar(){
     }   
     closedir(dir);
 }
-
 int main(){
     printf("Bienvenido!\n Presione 1 si desea ordenar la carpeta Juegos.\n Presione 2 si desea recorrer los archivos.\n");
     ordenar();
