@@ -11,11 +11,10 @@ void ordenar(){
     DIR *dir2;
     struct dirent *dp;
     const char *path="./Juegos"; 
-    const char *path1="./"; 
     char direc[300];
     char titulo[300];
     char genero[300];
-    char path2[300];
+    char path1[300]="./";
     char *aux;
     char aux2[300];
     FILE *fp;
@@ -50,13 +49,12 @@ void ordenar(){
             else{
                 printf("si existe esa carpeta\n");
             }
-            strcat(path2,path1);
-            strcat(path2,aux);
-            strcat(path2,"/");
-            strcat(path2,dp->d_name);
-            printf("%s",path2);
-            rename(direc,path2);
-            strcpy(path2,"");
+            strcat(path1,aux);
+            strcat(path1,"/");
+            strcat(path1,dp->d_name);
+            printf("%s",path1);
+            rename(direc,path1);
+            strcpy(path1,"");
         }
     }   
     closedir(dir);
