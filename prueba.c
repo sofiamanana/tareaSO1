@@ -4,70 +4,26 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
-/*
-void ordenar_por_categoria(){
-    mkdir("Juegos2",0700);
-    DIR *dir;
-    struct dirent *dp;
-    const char *path="./Juegos";
-    dir = opendir(path);
-    if(dir==NULL){
-        printf("No se abrio el directorio");
-    }
-    while((dp=readdir(dir))){
-        if ((strcmp(dp->d_name,".") == 0) || (strcmp(dp->d_name,"..") == 0)){		//elimina carpeta "." y ".."
-	    }
-        else{
 
-        }
-    }
-}
-*/
-void ordenar(){
-    int i=0;
-    DIR *dir;
-    DIR *dir2;
-    struct dirent *dp;
-    const char *path="./Juegos"; 
-    char path1[300]="";
-    char direc[300];
-    char titulo[300];
-    char genero[300];
-    char *aux;
-    char aux2[300];
-    FILE *fp;
-    dir = opendir(path);
-    if(dir==NULL){
-        printf("No se abrio el directorio");
-        exit(2);
-    }
-    while( (dp=readdir(dir)) ){
-        if ((strcmp(dp->d_name,".") == 0) || (strcmp(dp->d_name,"..") == 0)){		
-	    }
-        else{
-            strcpy(direc, "./Juegos/");  //direccion del archivo txt
-			strcat(direc, dp->d_name);	
-            fp = fopen(direc, "r");
-            fgets(titulo, sizeof(char)*300, fp);
-            fgets(genero, sizeof(char)*300, fp);
-            aux = strtok(genero, ",");
-            strcpy(aux2, "./");  //carpeta a donde tiene ir el txt
-			strcat(aux2, aux);
-            dir2 = opendir(aux2);
-            if(dir2==NULL){
-                mkdir(aux,0700);
+void ordenar_g(int arreglo[50], int j){
+    
+    int aux;
+    int i;
+    int k;
+    int arr[j];
+
+    for(k=0; k<j-1;k++){
+        for(i=1; i<j;i++){
+            if(arreglo[i+1]>arreglo[i]){
+                aux = arr[i+1];
+                arr[i+1]=arr[i];
+                arr[i]=aux;
             }
-            strcat(path1,"./");
-            strcat(path1,aux);
-            strcat(path1,"/");
-            strcat(path1,dp->d_name);
-            rename(direc,path1);
-            strcpy(path1,"");
-            fclose(fp);
-            closedir(dir2);
         }
-    }   
-    closedir(dir);
+    }
+    for(int x = 0; x<j; x++){
+        printf("ARREGLO: %d\n", arr[x]);
+    }
 }
 
 
@@ -79,11 +35,16 @@ void navegar(){
     char genero[300];
     char company[300];
     char descr[300];
-    char *arreglo[200];
+    char arreglo[50][200];
+    char nom[300];
+    int num_g[300];
     char *aux;
     DIR *dir;
     FILE *fp;
     struct dirent *dp;
+    const char s[2] = ",";
+    char *token;
+    
     
     while(strcmp(opcion,"4\n")!=0){
         getcwd(actual,sizeof(actual)); 
@@ -94,16 +55,39 @@ void navegar(){
             exit(2);
         }
         int i=0;
+        int j=0;
         while( (dp=readdir(dir)) ){
             
             if ((strcmp(dp->d_name,".") == 0) || (strcmp(dp->d_name,"..") == 0)){		
             }
             else{
+                strcpy(nom,dp->d_name);
+            
+            if (strstr(nom, ".txt") != NULL) {
+                int k=0;
+                fp = fopen(nom,"r");
+                fgets(titulo, sizeof(char)*300, fp);
+                fgets(genero, sizeof(char)*300, fp);
+                
+                
+                token = strtok(genero, s);
+                
+                while( token != NULL ) {
+                    k+=1;
+                    token = strtok(NULL, s);
+                }
+                num_g[j]=k;
+                strcpy(arreglo[j],nom);
+                j+=1;
+
+            }
                 i+=1;
                 printf("Archivo %d: %s\n",i,dp->d_name);
             }
+                
             
         }
+        ordenar_g(num_g, j);
         printf("\n1. Abrir carpeta.\n");
         printf("2. Para volver atras.\n");
         printf("3. Abrir un txt.\n");
@@ -141,20 +125,8 @@ void navegar(){
     }
 }
 
-int main(){
-    int opcion;
-    printf("Bienvenido!\n 1. Ordenar los archivos. \n 2. Navegar por los archivos, \n 3. Salir\n");
-    scanf("%d",&opcion);
-    while(opcion != 3){
-        if(opcion == 1){
-            ordenar();
-        }
-        else if(opcion == 2){
-            navegar();
-        }
-        printf("Bienvenido!\n 1. Ordenar los archivos. \n 2. Navegar por los archivos, \n 3. Salir\n");
-        scanf("%d",&opcion);
-    }
-    printf("Adios!\n");
-    return 0;
+int main () {
+    navegar();
+   
+   return(0);
 }
