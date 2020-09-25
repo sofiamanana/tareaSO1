@@ -5,24 +5,20 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-void ordenar_g(int arreglo[50], int j){
+void ordenar_g(int *arreglo, int j){
     
     int aux;
     int i;
     int k;
-    int arr[j];
-
+    
     for(k=0; k<j-1;k++){
         for(i=1; i<j;i++){
-            if(arreglo[i+1]>arreglo[i]){
-                aux = arr[i+1];
-                arr[i+1]=arr[i];
-                arr[i]=aux;
+            if(arreglo[i-1]>arreglo[i]){
+                aux = arreglo[i];
+                arreglo[i]=arreglo[i-1];
+                arreglo[i-1]=aux;
             }
         }
-    }
-    for(int x = 0; x<j; x++){
-        printf("ARREGLO: %d\n", arr[x]);
     }
 }
 
