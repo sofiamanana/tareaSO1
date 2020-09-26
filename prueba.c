@@ -20,8 +20,8 @@ void ordenar_g(int *arreglo, int j){
             }
         }
     }
+    //return arreglo;
 }
-
 
 void navegar(){
     char actual[300];
@@ -34,6 +34,7 @@ void navegar(){
     char arreglo[50][200];
     char nom[300];
     int num_g[300];
+    int num_o[300];
     char *aux;
     DIR *dir;
     FILE *fp;
@@ -50,7 +51,7 @@ void navegar(){
             printf("No se abrio el directorio");
             exit(2);
         }
-        int i=0;
+        
         int j=0;
         while( (dp=readdir(dir)) ){
             
@@ -59,31 +60,49 @@ void navegar(){
             else{
                 strcpy(nom,dp->d_name);
             
-            if (strstr(nom, ".txt") != NULL) {
-                int k=0;
-                fp = fopen(nom,"r");
-                fgets(titulo, sizeof(char)*300, fp);
-                fgets(genero, sizeof(char)*300, fp);
-                
-                
-                token = strtok(genero, s);
-                
-                while( token != NULL ) {
-                    k+=1;
-                    token = strtok(NULL, s);
-                }
-                num_g[j]=k;
-                strcpy(arreglo[j],nom);
-                j+=1;
+                if (strstr(nom, ".txt") != NULL) {
+                    int k=0;
+                    fp = fopen(nom,"r");
+                    fgets(titulo, sizeof(char)*300, fp);
+                    fgets(genero, sizeof(char)*300, fp);
+                    
+                    
+                    token = strtok(genero, s);
+                    
+                    while( token != NULL ) {
+                        k+=1;
+                        token = strtok(NULL, s);
+                    }
+                    num_g[j]=k;
+                    strcpy(arreglo[j],nom);
+                    j+=1;
 
-            }
-                i+=1;
-                printf("Archivo %d: %s\n",i,dp->d_name);
+                }else{
+                    
+                    printf("-%s\n",dp->d_name);
+                }
+                
             }
                 
             
         }
+        for(int k=0; k<j;k++){
+            num_o[k]=num_g[k];
+        }
         ordenar_g(num_g, j);
+
+        for(int i=0; i<j; i++){
+            int x=0;
+            for(int k=0; k<j; k++){
+                if((num_g[i]==num_o[k]) && (x==0)){
+                    printf("-%s\n",arreglo[k]);
+                    x++;
+                }
+            }
+        }
+
+
+
         printf("\n1. Abrir carpeta.\n");
         printf("2. Para volver atras.\n");
         printf("3. Abrir un txt.\n");
