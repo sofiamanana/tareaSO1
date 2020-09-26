@@ -4,25 +4,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
-/*
-void ordenar_por_categoria(){
-    mkdir("Juegos2",0700);
-    DIR *dir;
-    struct dirent *dp;
-    const char *path="./Juegos";
-    dir = opendir(path);
-    if(dir==NULL){
-        printf("No se abrio el directorio");
-    }
-    while((dp=readdir(dir))){
-        if ((strcmp(dp->d_name,".") == 0) || (strcmp(dp->d_name,"..") == 0)){		//elimina carpeta "." y ".."
-	    }
-        else{
 
-        }
-    }
-}
-*/
 void ordenar(){
     int i=0;
     DIR *dir;
@@ -70,6 +52,23 @@ void ordenar(){
     closedir(dir);
 }
 
+void ordenar_g(int *arreglo, int j){
+    
+    int aux;
+    int i;
+    int k;
+    
+    for(k=0; k<j-1;k++){
+        for(i=1; i<j;i++){
+            if(arreglo[i-1]>arreglo[i]){
+                aux = arreglo[i];
+                arreglo[i]=arreglo[i-1];
+                arreglo[i-1]=aux;
+            }
+        }
+    }
+    //return arreglo;
+}
 
 void navegar(){
     char actual[300];
@@ -79,11 +78,18 @@ void navegar(){
     char genero[300];
     char company[300];
     char descr[300];
-    char *arreglo[200];
+    char arreglo[50][200];
+    char nom[300];
+    int num_g[300];
+    int num_o[300];
+    int flags[300];
     char *aux;
     DIR *dir;
     FILE *fp;
     struct dirent *dp;
+    const char s[2] = ",";
+    char *token;
+    
     
     while(strcmp(opcion,"4\n")!=0){
         getcwd(actual,sizeof(actual)); 
@@ -93,17 +99,59 @@ void navegar(){
             printf("No se abrio el directorio");
             exit(2);
         }
-        int i=0;
+        
+        int j=0;
         while( (dp=readdir(dir)) ){
             
             if ((strcmp(dp->d_name,".") == 0) || (strcmp(dp->d_name,"..") == 0)){		
             }
             else{
-                i+=1;
-                printf("Archivo %d: %s\n",i,dp->d_name);
+                strcpy(nom,dp->d_name);
+            
+                if (strstr(nom, ".txt") != NULL) {
+                    int k=0;
+                    fp = fopen(nom,"r");
+                    fgets(titulo, sizeof(char)*300, fp);
+                    fgets(genero, sizeof(char)*300, fp);
+                    
+                    
+                    token = strtok(genero, s);
+                    
+                    while( token != NULL ) {
+                        k+=1;
+                        token = strtok(NULL, s);
+                    }
+                    num_g[j]=k;
+                    strcpy(arreglo[j],nom);
+                    j+=1;
+
+                }else{
+                    
+                    printf("-%s\n",dp->d_name);
+                }
+                
             }
+                
             
         }
+        for(int k=0; k<j;k++){
+            num_o[k]=num_g[k];
+        }
+        for(int k = 0; k<j ;k++){
+            flags[k]=0;
+        }
+
+        ordenar_g(num_g, j);
+        
+        for(int i=0; i<j; i++){
+            for(int k=0; k<j; k++){
+                if(num_g[i]==num_o[k] && flags[k]==0){
+                    printf("-%s\n",arreglo[k]);
+                    flags[k]=1;
+                }
+            }
+        }
+
         printf("\n1. Abrir carpeta.\n");
         printf("2. Para volver atras.\n");
         printf("3. Abrir un txt.\n");

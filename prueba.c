@@ -35,6 +35,7 @@ void navegar(){
     char nom[300];
     int num_g[300];
     int num_o[300];
+    int flags[300];
     char *aux;
     DIR *dir;
     FILE *fp;
@@ -89,19 +90,20 @@ void navegar(){
         for(int k=0; k<j;k++){
             num_o[k]=num_g[k];
         }
-        ordenar_g(num_g, j);
+        for(int k = 0; k<j ;k++){
+            flags[k]=0;
+        }
 
+        ordenar_g(num_g, j);
+        
         for(int i=0; i<j; i++){
-            int x=0;
             for(int k=0; k<j; k++){
-                if((num_g[i]==num_o[k]) && (x==0)){
+                if(num_g[i]==num_o[k] && flags[k]==0){
                     printf("-%s\n",arreglo[k]);
-                    x++;
+                    flags[k]=1;
                 }
             }
         }
-
-
 
         printf("\n1. Abrir carpeta.\n");
         printf("2. Para volver atras.\n");
