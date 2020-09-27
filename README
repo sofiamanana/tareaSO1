@@ -1,6 +1,7 @@
+Integrantes: 
 Alfredo Llanos 201804536-5
 Sofia Mañana 201804535-7
-En la terminal con make run se ejecuta el programa
-Todos los juegos iniciales deben estar en una carpeta llamada Juegos
-Ubuntu 20.04
 
+Todos los archivos .txt iniciales deben estar en una carpeta llamada Juegos.
+Programa desarrollado en sistema operativo Ubuntu 20.04 con lenguaje de programacion C.
+Ejecutar make run en la Linea de Comando.
