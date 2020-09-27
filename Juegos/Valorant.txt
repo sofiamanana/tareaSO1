@@ -1,4 +1,4 @@
 Valorant
-Disparos,Multijugador
+Multijugador,Disparos
 Riot Games
 Juego pa malo
